@@ -123,6 +123,9 @@ class ListNode {
     }
 }
 
+// 1. Reverse a Linked List.
+
+/*
 func reverseLinkedList(_ head: ListNode?) -> ListNode? {
     var prev: ListNode?
     var current = head
@@ -165,4 +168,130 @@ print("Reversed Linked List:")
 let reversedListHead = reverseLinkedList(head)
 
 printLinkedList(reversedListHead)
+ 
+ */
 
+// 2. Detect a cycle in a linked list.
+
+/*
+/// This function checks for cycle using `Floyd's Tortoise and Hare` algorithm.
+/// Time complexity for this approach is `o(n)` & space complexity is `o(1)`.
+/// If we use `Hash Map` approach, Time complexity will be `o(n)` & space complexity will be `o(n)`.
+/// - Parameter head: Linked List
+/// - Returns: `true` if cycle is detected otherwise retruns `false`.
+func hasCycle(_ head: ListNode?) -> Bool {
+    var tortoise = head
+    var hare = head
+    
+    while hare != nil && hare?.next != nil {
+        tortoise = tortoise?.next
+        hare = hare?.next?.next
+        
+        if tortoise === hare {
+            return true // cycle detected..
+        }
+    }
+    
+    return false    // no cycle found..
+}
+
+let node1 = ListNode(value: 1)
+let node2 = ListNode(value: 2)
+let node3 = ListNode(value: 3)
+let node4 = ListNode(value: 4)
+
+node1.next = node2
+node2.next = node3
+node3.next = node4
+node4.next = node2      // Creating cycle..
+
+print("Has Cycle: \(hasCycle(node1))")
+
+*/
+
+// 3. Find the intersection point of two linked lists.
+
+/*
+/// - `Time Complexity: O(m + n)`
+///     - `m`: The length of the first linked list.
+///     - `n`: The length of the second linked list.
+///     - The solution traverses both linked lists once. The while loop runs until either the intersection point is found or both pointers reach the end of the lists.
+/// - `Sace Complexity`: `O(1)`
+/// - It only uses two pointers (pointerA and pointerB) to traverse the linked lists and does not use any additional data structures.
+/// - Parameters:
+///   - headA: Linked list A.
+///   - headB: Linked list B.
+/// - Returns: Intersection node if any.
+func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
+    var pointerA = headA
+    var pointerB = headB
+    
+    // Traverse both lists until they either intersect or reach the end
+    while pointerA !== pointerB {
+        pointerA = pointerA == nil ? headB : pointerA?.next
+        pointerB = pointerB == nil ? headA : pointerB?.next
+    }
+    
+    return pointerA // or pointerB, as they are now pointing to the intersection node (if any)
+}
+
+
+// Example usage:
+// Create two linked lists with an intersection point
+let commonNode = ListNode(value: 8)
+let listA = ListNode(value: 4)
+listA.next = ListNode(value: 1)
+listA.next?.next = commonNode
+
+let listB = ListNode(value: 5)
+listB.next = ListNode(value: 0)
+listB.next?.next = ListNode(value: 1)
+listB.next?.next?.next = commonNode
+
+// Call the function to find the intersection point
+let intersectionNode = getIntersectionNode(listA, listB)
+
+if let intersectionNodeValue = intersectionNode?.value {
+    print("Intersection point value: \(intersectionNodeValue)")
+} else {
+    print("No intersection point found.")
+}
+*/
+
+// 3. Implement a function to remove duplicates from an unsorted linked list.
+/*
+func removeDuplicates(_ list: inout ListNode?) {
+    var seenNodes = Set<Int>()
+    var current = list
+    var previous: ListNode? = nil
+    
+    while current != nil {
+        let value = current!.value
+        
+        if seenNodes.contains(value) {
+            // Remove the duplicate node
+            previous?.next = current?.next
+        } else {
+            // Add the value to the set for future comparison
+            seenNodes.insert(value)
+            previous = current
+        }
+        
+        // Move to the next node
+        current = current?.next
+    }
+}
+
+
+// Example usage:
+
+// Create a sample linked list: 1 -> 3 -> 2 -> 3 -> 4 -> 1 -> nil
+var head = ListNode(value: 1)
+head.next = ListNode(value: 3)
+head.next?.next = ListNode(value: 2)
+head.next?.next?.next = ListNode(value: 3)
+head.next?.next?.next?.next = ListNode(value: 4)
+head.next?.next?.next?.next?.next = ListNode(value: 1)
+
+removeDuplicates(head as? ListNode)
+*/
